@@ -17,3 +17,9 @@ boro@boro-ThinkPad-P53:~/ComfyUI$ source .venv/bin/activate
 (.venv) boro@boro-ThinkPad-P53:~/ComfyUI$ python main.py
 
 YouTube Link https://www.youtube.com/watch?v=NhGtBL4fi0c&t=575s
+
+
+// starting comfyUI after installation
+
+boro@boro-ThinkPad-P53:~/ComfyUI$ source .venv/bin/activate
+(.venv) boro@boro-ThinkPad-P53:~/ComfyUI$ python main.py
