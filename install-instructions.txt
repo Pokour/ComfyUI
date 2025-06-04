@@ -1,0 +1,19 @@
+// terminal
+
+boro@boro-ThinkPad-P53:~/ComfyUI$
+
+boro@boro-ThinkPad-P53:~/ComfyUI$ sudo apt install python3-venv
+
+boro@boro-ThinkPad-P53:~/ComfyUI$ python3 -m venv .venv
+
+boro@boro-ThinkPad-P53:~/ComfyUI$ source .venv/bin/activate
+
+(.venv) boro@boro-ThinkPad-P53:~/ComfyUI$
+
+(.venv) boro@boro-ThinkPad-P53:~/ComfyUI$ pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu128
+
+(.venv) boro@boro-ThinkPad-P53:~/ComfyUI$ pip install -r requirements.txt
+
+(.venv) boro@boro-ThinkPad-P53:~/ComfyUI$ python main.py
+
+YouTube Link https://www.youtube.com/watch?v=NhGtBL4fi0c&t=575s
