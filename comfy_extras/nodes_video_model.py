@@ -15,7 +15,7 @@ class ImageOnlyCheckpointLoader:
     RETURN_TYPES = ("MODEL", "CLIP_VISION", "VAE")
     FUNCTION = "load_checkpoint"
 
-    CATEGORY = "loaders/video_models"
+    CATEGORY = "loaders"
 
     def load_checkpoint(self, ckpt_name, output_vae=True, output_clip=True):
         ckpt_path = folder_paths.get_full_path_or_raise("checkpoints", ckpt_name)
@@ -32,9 +32,9 @@ class SVD_img2vid_Conditioning:
                               "width": ("INT", {"default": 1024, "min": 16, "max": nodes.MAX_RESOLUTION, "step": 8}),
                               "height": ("INT", {"default": 576, "min": 16, "max": nodes.MAX_RESOLUTION, "step": 8}),
                               "video_frames": ("INT", {"default": 14, "min": 1, "max": 4096}),
-                              "motion_bucket_id": ("INT", {"default": 127, "min": 1, "max": 1023}),
+                              "motion_bucket_id": ("INT", {"default": 127, "min": 1, "max": 1023, "advanced": True}),
                               "fps": ("INT", {"default": 6, "min": 1, "max": 1024}),
-                              "augmentation_level": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 10.0, "step": 0.01})
+                              "augmentation_level": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 10.0, "step": 0.01, "advanced": True})
                              }}
     RETURN_TYPES = ("CONDITIONING", "CONDITIONING", "LATENT")
     RETURN_NAMES = ("positive", "negative", "latent")
@@ -60,12 +60,12 @@ class VideoLinearCFGGuidance:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": { "model": ("MODEL",),
-                              "min_cfg": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 100.0, "step":0.5, "round": 0.01}),
+                              "min_cfg": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 100.0, "step":0.5, "round": 0.01, "advanced": True}),
                               }}
     RETURN_TYPES = ("MODEL",)
     FUNCTION = "patch"
 
-    CATEGORY = "sampling/video_models"
+    CATEGORY = "sampling/guiders"
 
     def patch(self, model, min_cfg):
         def linear_cfg(args):
@@ -84,12 +84,12 @@ class VideoTriangleCFGGuidance:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": { "model": ("MODEL",),
-                              "min_cfg": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 100.0, "step":0.5, "round": 0.01}),
+                              "min_cfg": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 100.0, "step":0.5, "round": 0.01, "advanced": True}),
                               }}
     RETURN_TYPES = ("MODEL",)
     FUNCTION = "patch"
 
-    CATEGORY = "sampling/video_models"
+    CATEGORY = "sampling/guiders"
 
     def patch(self, model, min_cfg):
         def linear_cfg(args):
@@ -157,5 +157,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ImageOnlyCheckpointLoader": "Image Only Checkpoint Loader (img2vid model)",
+    "ImageOnlyCheckpointLoader": "Load Checkpoint Image Only (img2vid model)",
+    "VideoLinearCFGGuidance": "Video Linear CFG Guidance",
+    "VideoTriangleCFGGuidance": "Video Triangle CFG Guidance",
 }

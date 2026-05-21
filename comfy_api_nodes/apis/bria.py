@@ -23,7 +23,7 @@ class BriaEditImageRequest(BaseModel):
         None,
         description="Mask image (black and white). Black areas will be preserved, white areas will be edited. "
         "If omitted, the edit applies to the entire image. "
-        "The input image and the the input mask must be of the same size.",
+        "The input image and the input mask must be of the same size.",
     )
     negative_prompt: str | None = Field(None)
     guidance_scale: float = Field(...)
@@ -45,17 +45,55 @@ class BriaEditImageRequest(BaseModel):
     )
 
 
+class BriaRemoveBackgroundRequest(BaseModel):
+    image: str = Field(...)
+    sync: bool = Field(False)
+    visual_input_content_moderation: bool = Field(
+        False, description="If true, returns 422 on input image moderation failure."
+    )
+    visual_output_content_moderation: bool = Field(
+        False, description="If true, returns 422 on visual output moderation failure."
+    )
+    seed: int = Field(...)
+
+
 class BriaStatusResponse(BaseModel):
     request_id: str = Field(...)
     status_url: str = Field(...)
     warning: str | None = Field(None)
 
 
-class BriaResult(BaseModel):
+class BriaRemoveBackgroundResult(BaseModel):
+    image_url: str = Field(...)
+
+
+class BriaRemoveBackgroundResponse(BaseModel):
+    status: str = Field(...)
+    result: BriaRemoveBackgroundResult | None = Field(None)
+
+
+class BriaImageEditResult(BaseModel):
     structured_prompt: str = Field(...)
     image_url: str = Field(...)
 
 
-class BriaResponse(BaseModel):
+class BriaImageEditResponse(BaseModel):
     status: str = Field(...)
-    result: BriaResult | None = Field(None)
+    result: BriaImageEditResult | None = Field(None)
+
+
+class BriaRemoveVideoBackgroundRequest(BaseModel):
+    video: str = Field(...)
+    background_color: str = Field(default="transparent", description="Background color for the output video.")
+    output_container_and_codec: str = Field(...)
+    preserve_audio: bool = Field(True)
+    seed: int = Field(...)
+
+
+class BriaRemoveVideoBackgroundResult(BaseModel):
+    video_url: str = Field(...)
+
+
+class BriaRemoveVideoBackgroundResponse(BaseModel):
+    status: str = Field(...)
+    result: BriaRemoveVideoBackgroundResult | None = Field(None)
